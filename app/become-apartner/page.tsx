@@ -69,7 +69,7 @@ export default function BecomePartnerPage() {
     className="object-cover opacity-90"  // Increased to 90% opacity
     priority
   />
-  <div className="absolute inset-0 bg-black/10"></div> 
+  <div className="absolute inset-0"></div> 
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

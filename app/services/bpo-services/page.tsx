@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, ReactElement } from "react";
 import {
-    
   Phone,
   MessageSquare,
   Mail,
@@ -45,7 +44,7 @@ import {
 type ServiceItem = {
   name: string;
   description: string;
-  icon: JSX.Element;
+  icon: ReactElement;
 };
 
 type BpoServiceType = {
