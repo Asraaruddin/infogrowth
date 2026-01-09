@@ -24,6 +24,7 @@ export default function Navbar() {
     { name: "About Us", href: "/about-us" },
     { name: "Services", href: "#", dropdown: servicesItems },
     { name: "Become a Partner", href: "/become-apartner" },
+    { name: "Carrers", href: "/carrers" },
     { name: "Blogs", href: "/blogs" },
   ];
 

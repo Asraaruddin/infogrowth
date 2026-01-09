@@ -270,6 +270,17 @@ export default function Home() {
 </section>
 
 
+
+<div className="bg-[#6b9d8c] text-white">Primary Teal</div>
+<div className="bg-[#5a8c7a] text-white">Darker Teal</div>
+<div className="bg-[#7cae9e] text-gray-900">Lighter Teal</div>
+
+
+<div className="bg-[#946273] text-white">Muted Plum (Complementary)</div>
+<div className="bg-[#e8b16d] text-gray-900">Warm Sand (Analogous)</div>
+<div className="bg-[#f0e6d4] text-gray-900">Cream (Neutral)</div>
+<div className="bg-[#2c4f6d] text-white">Deep Navy (Contrast)</div>
+
       {/* ================= QUICK INQUIRY ================= */}
       <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-4xl mx-auto px-6">
