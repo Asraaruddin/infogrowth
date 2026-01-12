@@ -1,4 +1,6 @@
 'use client';
+// Add this line to disable static generation
+export const dynamic = 'force-dynamic';
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
