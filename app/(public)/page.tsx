@@ -152,12 +152,11 @@ function ServiceCard({ icon, title, text, gradient = "from-blue-500 to-blue-600"
     </div>
   );
 }
-
-function LogoCard({ children }) {
+function LogoCard({ children }: { children: React.ReactNode }) {
   return (
     <div
       className="
-        h-24 md:h-32
+        h-28 md:h-36
         flex items-center justify-center
         bg-gray-50
         rounded-2xl
