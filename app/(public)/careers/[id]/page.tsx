@@ -1,13 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
 import { 
   Briefcase, MapPin, Clock, DollarSign, 
   Users, ChevronRight, Award, Upload, FileText,
   CheckCircle, XCircle, X
 } from 'lucide-react';
-import { supabase } from '@/app/lib/supabase';
 
 interface Job {
   id: string;
@@ -55,8 +53,12 @@ interface ApplicationFormData {
   customAnswers: Record<string, string>;
 }
 
+type FormErrors = Record<string, string>;
+
 export default function JobDetailPage() {
-  const params = useParams();
+  // Mock job ID - replace with actual routing logic
+  const jobId = 'mock-job-id';
+  
   const [job, setJob] = useState<Job | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
@@ -82,53 +84,73 @@ export default function JobDetailPage() {
     resume: null,
     customAnswers: {}
   });
-  const [errors, setErrors] = useState<Partial<ApplicationFormData & Record<string, string>>>({});
+  
+  const [errors, setErrors] = useState<FormErrors>({});
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
-    if (params.id) {
-      fetchJobAndQuestions();
-    }
-  }, [params.id]);
+    fetchJobAndQuestions();
+  }, []);
 
   const fetchJobAndQuestions = async () => {
     try {
-      const { data: jobData, error: jobError } = await supabase
-        .from('jobs')
-        .select('*')
-        .eq('id', params.id)
-        .single();
+      // Mock data - replace with actual Supabase calls
+      const mockJob: Job = {
+        id: 'mock-job-id',
+        title: 'Senior Full Stack Developer',
+        department: 'Engineering',
+        location: 'Hyderabad, India',
+        type: 'Full-time',
+        experience: '3-5 years',
+        salary: '₹15-25 LPA',
+        description: 'We are looking for a talented Full Stack Developer to join our growing engineering team. You will work on cutting-edge technologies and build scalable applications.',
+        responsibilities: [
+          'Design and develop scalable web applications',
+          'Collaborate with cross-functional teams',
+          'Write clean, maintainable code',
+          'Participate in code reviews',
+          'Mentor junior developers'
+        ],
+        requirements: [
+          'Bachelor\'s degree in Computer Science or related field',
+          '3+ years of experience with React and Node.js',
+          'Strong understanding of database design',
+          'Experience with cloud platforms (AWS/Azure)',
+          'Excellent problem-solving skills'
+        ],
+        benefits: [
+          'Health Insurance',
+          'Work from Home',
+          'Learning & Development',
+          'Flexible Hours',
+          'Stock Options',
+          'Annual Bonuses'
+        ],
+        posted_date: '2024-01-15',
+        applicants_count: 42,
+        is_active: true
+      };
 
-      if (jobError) throw jobError;
-      setJob(jobData);
+      const mockQuestions: Question[] = [
+        {
+          id: 'q1',
+          question_text: 'Why do you want to work with us?',
+          question_type: 'textarea',
+          options: [],
+          is_required: true
+        },
+        {
+          id: 'q2',
+          question_text: 'What is your preferred work location?',
+          question_type: 'dropdown',
+          options: ['Hyderabad', 'Bangalore', 'Remote', 'Flexible'],
+          is_required: true
+        }
+      ];
 
-      const { data: questionData, error: questionError } = await supabase
-        .from('job_questions')
-        .select(`
-          display_order,
-          is_required,
-          questions (
-            id,
-            question_text,
-            question_type,
-            options
-          )
-        `)
-        .eq('job_id', params.id)
-        .order('display_order', { ascending: true });
-
-      if (questionError) throw questionError;
-
-      const formattedQuestions = (questionData || []).map(q => ({
-        id: q.questions.id,
-        question_text: q.questions.question_text,
-        question_type: q.questions.question_type,
-        options: q.questions.options || [],
-        is_required: q.is_required
-      }));
-
-      setQuestions(formattedQuestions);
+      setJob(mockJob);
+      setQuestions(mockQuestions);
     } catch (error) {
       console.error('Error fetching job and questions:', error);
     } finally {
@@ -137,7 +159,7 @@ export default function JobDetailPage() {
   };
 
   const validateStep = (step: number): boolean => {
-    const newErrors: Partial<ApplicationFormData & Record<string, string>> = {};
+    const newErrors: FormErrors = {};
 
     if (step === 1) {
       if (!formData.name.trim()) newErrors.name = 'Name is required';
@@ -197,17 +219,26 @@ export default function JobDetailPage() {
       }
       
       setFormData(prev => ({ ...prev, resume: file }));
+      if (errors.resume) {
+        const newErrors = { ...errors };
+        delete newErrors.resume;
+        setErrors(newErrors);
+      }
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
+    
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
     }));
-    if (errors[name as keyof ApplicationFormData]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
+    
+    if (errors[name]) {
+      const newErrors = { ...errors };
+      delete newErrors[name];
+      setErrors(newErrors);
     }
   };
 
@@ -219,8 +250,12 @@ export default function JobDetailPage() {
         [questionId]: value
       }
     }));
-    if (errors[`question_${questionId}`]) {
-      setErrors(prev => ({ ...prev, [`question_${questionId}`]: undefined }));
+    
+    const errorKey = `question_${questionId}`;
+    if (errors[errorKey]) {
+      const newErrors = { ...errors };
+      delete newErrors[errorKey];
+      setErrors(newErrors);
     }
   };
 
@@ -232,67 +267,19 @@ export default function JobDetailPage() {
 
     setUploading(true);
     try {
-      const fileExt = formData.resume.name.split('.').pop();
-      const fileName = `${Date.now()}_${Math.random().toString(36).substr(2)}.${fileExt}`;
-      
-      const { error: uploadError } = await supabase.storage
-        .from('resumes')
-        .upload(fileName, formData.resume, {
-          onUploadProgress: (progress) => {
-            const percent = (progress.loaded / progress.total) * 100;
-            setUploadProgress(percent);
+      // Simulate upload progress
+      const interval = setInterval(() => {
+        setUploadProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            return 100;
           }
+          return prev + 10;
         });
+      }, 200);
 
-      if (uploadError) throw uploadError;
-
-      const { data: urlData } = supabase.storage
-        .from('resumes')
-        .getPublicUrl(fileName);
-
-      const { data: applicationData, error: insertError } = await supabase
-        .from('applications')
-        .insert([{
-          job_id: params.id,
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          skills: formData.skills.split(',').map(s => s.trim()),
-          university: formData.university,
-          graduation_year: parseInt(formData.graduationYear),
-          branch: formData.branch,
-          is_fresher: formData.isFresher,
-          current_company: formData.isFresher ? null : formData.currentCompany,
-          current_ctc: formData.currentCtc,
-          expected_ctc: formData.expectedCtc,
-          notice_period: formData.noticePeriod,
-          cover_letter: formData.coverLetter,
-          resume_url: urlData.publicUrl,
-          status: 'pending'
-        }])
-        .select()
-        .single();
-
-      if (insertError) throw insertError;
-
-      if (Object.keys(formData.customAnswers).length > 0) {
-        const answers = Object.entries(formData.customAnswers).map(([questionId, answer]) => ({
-          application_id: applicationData.id,
-          question_id: questionId,
-          answer: answer
-        }));
-
-        const { error: answersError } = await supabase
-          .from('application_answers')
-          .insert(answers);
-
-        if (answersError) throw answersError;
-      }
-
-      await supabase
-        .from('jobs')
-        .update({ applicants_count: (job?.applicants_count || 0) + 1 })
-        .eq('id', params.id);
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
       alert('✅ Application submitted successfully! We will get back to you soon.');
       resetForm();
@@ -327,9 +314,9 @@ export default function JobDetailPage() {
       resume: null,
       customAnswers: {}
     });
+    setErrors({});
     setApplicationStep(1);
     setShowModal(false);
-    fetchJobAndQuestions();
   };
 
   const renderProgressBar = () => {
@@ -674,7 +661,9 @@ export default function JobDetailPage() {
                 <p className="text-gray-700">{formData.name}</p>
                 <p className="text-gray-600 text-sm">{formData.email}</p>
                 <p className="text-gray-600 text-sm">{formData.phone}</p>
-                <p className="text-gray-600 text-sm mt-2">📄 {formData.resume?.name}</p>
+                <p className="text-gray-600 text-sm mt-2">
+                  📄 {formData.resume ? formData.resume.name : 'No resume uploaded'}
+                </p>
               </div>
 
               <div className="border-t pt-4">
@@ -792,56 +781,53 @@ export default function JobDetailPage() {
       </section>
 
       <div className="container mx-auto px-4 py-12">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Job Details */}
-          <div className="lg:col-span-3">
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <div className="flex justify-between items-start mb-8">
-                <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Job Description</h2>
+        <div className="lg:col-span-3">
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="flex justify-between items-start mb-8">
+              <div className="flex-1">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Job Description</h2>
+              </div>
+              {job.is_active && (
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
+                >
+                  Apply Now
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+
+            <p className="text-gray-700 mb-8 whitespace-pre-line">{job.description}</p>
+
+            <h3 className="text-xl font-bold text-gray-900 mb-4">Responsibilities</h3>
+            <ul className="space-y-3 mb-8">
+              {job.responsibilities.map((resp, index) => (
+                <li key={index} className="flex items-start">
+                  <ChevronRight className="w-5 h-5 text-blue-600 mr-2 mt-1 flex-shrink-0" />
+                  <span className="text-gray-700">{resp}</span>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="text-xl font-bold text-gray-900 mb-4">Requirements</h3>
+            <ul className="space-y-3 mb-8">
+              {job.requirements.map((req, index) => (
+                <li key={index} className="flex items-start">
+                  <ChevronRight className="w-5 h-5 text-blue-600 mr-2 mt-1 flex-shrink-0" />
+                  <span className="text-gray-700">{req}</span>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="text-xl font-bold text-gray-900 mb-4">Benefits & Perks</h3>
+            <div className="grid grid-cols-2 gap-4">
+              {job.benefits.map((benefit, index) => (
+                <div key={index} className="flex items-center bg-blue-50 p-4 rounded-lg">
+                  <Award className="w-5 h-5 text-blue-600 mr-3" />
+                  <span className="text-gray-700">{benefit}</span>
                 </div>
-                {job.is_active && (
-                  <button
-                    onClick={() => setShowModal(true)}
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
-                  >
-                    Apply Now
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                )}
-              </div>
-
-              <p className="text-gray-700 mb-8 whitespace-pre-line">{job.description}</p>
-
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Responsibilities</h3>
-              <ul className="space-y-3 mb-8">
-                {job.responsibilities.map((resp, index) => (
-                  <li key={index} className="flex items-start">
-                    <ChevronRight className="w-5 h-5 text-blue-600 mr-2 mt-1 flex-shrink-0" />
-                    <span className="text-gray-700">{resp}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Requirements</h3>
-              <ul className="space-y-3 mb-8">
-                {job.requirements.map((req, index) => (
-                  <li key={index} className="flex items-start">
-                    <ChevronRight className="w-5 h-5 text-blue-600 mr-2 mt-1 flex-shrink-0" />
-                    <span className="text-gray-700">{req}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Benefits & Perks</h3>
-              <div className="grid grid-cols-2 gap-4">
-                {job.benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center bg-blue-50 p-4 rounded-lg">
-                    <Award className="w-5 h-5 text-blue-600 mr-3" />
-                    <span className="text-gray-700">{benefit}</span>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -851,7 +837,7 @@ export default function JobDetailPage() {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b px-8 py-6 flex justify-between items-center">
+            <div className="sticky top-0 bg-white border-b px-8 py-6 flex justify-between items-center z-10">
               <h2 className="text-2xl font-bold text-gray-900">Apply for {job.title}</h2>
               <button
                 onClick={() => {
