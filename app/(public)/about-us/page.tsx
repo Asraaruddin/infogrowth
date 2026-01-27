@@ -1,4 +1,4 @@
-// app/about/page.tsx
+import type { Metadata } from 'next';
 import Image from "next/image";
 import {
   Code2,
@@ -18,6 +18,29 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+// SEO Metadata
+export const metadata: Metadata = {
+  title: "About InfoGrowth | Technology & Digital Transformation Partner",
+  description: "Learn about InfoGrowth - a global technology and staffing solutions company empowering businesses through digital transformation, innovation, and technology-driven solutions.",
+  keywords: ["About InfoGrowth", "technology solutions", "digital transformation", "IT staffing", "cloud services", "global IT company"],
+  openGraph: {
+    title: "About InfoGrowth | Technology & Digital Transformation Partner",
+    description: "Empowering businesses worldwide through digital transformation, innovation, and technology-driven solutions",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+};
+
 export default function AboutPage() {
   return (
     <main className="bg-white">
@@ -26,8 +49,8 @@ export default function AboutPage() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
-            src="/aboutusbg.jpg"
-            alt="InfoGrowth About Us Background"
+            src="/aboutusbghero.jpg"
+            alt="InfoGrowth About Us Background - Digital transformation and technology solutions"
             fill
             className="object-cover object-center"
             priority
@@ -40,18 +63,26 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-transparent to-blue-900/30"></div>
         </div>
 
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
+        {/* Grid Pattern Overlay - Using CSS Grid instead of missing SVG */}
+        <div 
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+          }}
+        ></div>
 
         {/* Hero Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span className="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-8 border border-white/40 text-white">
-  Our Story
-</span>
-
+          <span className="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-8 border border-white/40 text-white">
+            Our Story
+          </span>
           
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight">
-            <span className=" text-white">About</span> <span className="  text-[#3f7ec1]">Info</span><span className="text-[#96bb57]">Growth</span>
+            <span className="text-white">About</span> <span className="text-[#3f7ec1]">Info</span><span className="text-[#96bb57]">Growth</span>
           </h1>
           
           <p className="text-lg sm:text-xl md:text-2xl max-w-4xl mx-auto text-white/90 leading-relaxed mb-12 px-4">
@@ -60,23 +91,22 @@ export default function AboutPage() {
           </p>
 
           {/* Stats/Chips Section */}
-         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 max-w-3xl mx-auto">
-  <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 py-3 rounded-xl border border-white/40 hover:bg-white/30 transition-all duration-300 shadow-lg">
-    <Globe className="w-5 h-5 text-white flex-shrink-0" />
-    <span className="font-medium text-white">Global Presence</span>
-  </div>
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 max-w-3xl mx-auto">
+            <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 py-3 rounded-xl border border-white/40 hover:bg-white/30 transition-all duration-300 shadow-lg">
+              <Globe className="w-5 h-5 text-white flex-shrink-0" />
+              <span className="font-medium text-white">Global Presence</span>
+            </div>
 
-  <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 py-3 rounded-xl border border-white/40 hover:bg-white/30 transition-all duration-300 shadow-lg">
-    <TrendingUp className="w-5 h-5 text-white flex-shrink-0" />
-    <span className="font-medium text-white">Growth Focused</span>
-  </div>
+            <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 py-3 rounded-xl border border-white/40 hover:bg-white/30 transition-all duration-300 shadow-lg">
+              <TrendingUp className="w-5 h-5 text-white flex-shrink-0" />
+              <span className="font-medium text-white">Growth Focused</span>
+            </div>
 
-  <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 py-3 rounded-xl border border-white/40 hover:bg-white/30 transition-all duration-300 shadow-lg">
-    <Shield className="w-5 h-5 text-white flex-shrink-0" />
-    <span className="font-medium text-white">Trusted Partner</span>
-  </div>
-</div>
-
+            <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 py-3 rounded-xl border border-white/40 hover:bg-white/30 transition-all duration-300 shadow-lg">
+              <Shield className="w-5 h-5 text-white flex-shrink-0" />
+              <span className="font-medium text-white">Trusted Partner</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -129,8 +159,8 @@ export default function AboutPage() {
             <div className="relative group">
               <div className="relative h-[400px] sm:h-[450px] lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/aboutuspic.png"
-                  alt="Digital Transformation"
+                  src="/aboutuspic2.jpg"
+                  alt="Digital Transformation - InfoGrowth team collaborating on technology solutions"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                   priority
@@ -155,8 +185,8 @@ export default function AboutPage() {
             <div className="relative group order-2 lg:order-1">
               <div className="relative h-[400px] sm:h-[450px] lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/aboutus.png"
-                  alt="Our Global Team"
+                  src="/aboutuspic.jpg"
+                  alt="Our Global Team - InfoGrowth diverse team of technology experts"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                   priority
@@ -379,13 +409,13 @@ export default function AboutPage() {
                 href: "/services/managed-it-services"
               },
               {
-                title: "Customer Care & BPO",
-                description: "24/7 customer support solutions",
+                title: "Staffing Services That Scale With You",
+                description: "Comprehensive IT and Non-IT staffing solutions",
                 icon: "👥",
                 color: "bg-green-50 text-green-600",
-                href: "/services/bpo-services"
+                href: "/services/staffing-services"
               },
-            ].map((service) => (
+            ].map((service, index) => (
               <div
                 key={service.title}
                 className="group bg-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-gray-100"
@@ -402,6 +432,7 @@ export default function AboutPage() {
                 <Link
                   href={service.href}
                   className="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700 group-hover:gap-2 transition-all"
+                  aria-label={`Learn more about ${service.title}`}
                 >
                   Learn more
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -426,8 +457,9 @@ export default function AboutPage() {
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
             <Link
-              href="/contact"
+              href="/contact-us"
               className="group inline-flex items-center justify-center gap-3 bg-slate-900 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full font-semibold shadow-lg hover:bg-slate-800 hover:shadow-2xl transition-all duration-300"
+              aria-label="Contact InfoGrowth for business transformation"
             >
               Get in Touch
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -441,9 +473,16 @@ export default function AboutPage() {
 
 /* COMPONENTS */
 
-function PresenceCard({ icon, title, description, gradient }: any) {
+interface PresenceCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  gradient: string;
+}
+
+function PresenceCard({ icon, title, description, gradient }: PresenceCardProps) {
   return (
-    <div className="group bg-white p-6 sm:p-8 rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+    <article className="group bg-white p-6 sm:p-8 rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
       <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-r ${gradient} flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform`}>
         {icon}
       </div>
@@ -453,13 +492,20 @@ function PresenceCard({ icon, title, description, gradient }: any) {
       <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
         {description}
       </p>
-    </div>
+    </article>
   );
 }
 
-function JourneyCard({ year, title, text, position }: any) {
+interface JourneyCardProps {
+  year: string;
+  title: string;
+  text: string;
+  position: string;
+}
+
+function JourneyCard({ year, title, text, position }: JourneyCardProps) {
   return (
-    <div className={`relative bg-white p-6 sm:p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ${position === 'center' ? 'md:mt-8 lg:mt-12' : ''}`}>
+    <article className={`relative bg-white p-6 sm:p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ${position === 'center' ? 'md:mt-8 lg:mt-12' : ''}`}>
       <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-bold shadow-lg text-sm sm:text-base">
         {year}
       </div>
@@ -468,13 +514,21 @@ function JourneyCard({ year, title, text, position }: any) {
         <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{text}</p>
       </div>
       <div className="absolute top-1/2 -right-4 transform -translate-y-1/2 w-6 h-6 sm:w-8 sm:h-8 bg-blue-500 rounded-full hidden md:block"></div>
-    </div>
+    </article>
   );
 }
 
-function MissionVision({ icon, title, text, gradient, points }: any) {
+interface MissionVisionProps {
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+  gradient: string;
+  points: string[];
+}
+
+function MissionVision({ icon, title, text, gradient, points }: MissionVisionProps) {
   return (
-    <div className="bg-white p-6 sm:p-8 lg:p-10 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+    <article className="bg-white p-6 sm:p-8 lg:p-10 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
       <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-r ${gradient} flex items-center justify-center text-white mb-6 sm:mb-8`}>
         {icon}
       </div>
@@ -488,6 +542,6 @@ function MissionVision({ icon, title, text, gradient, points }: any) {
           </li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 }

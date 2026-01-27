@@ -79,7 +79,7 @@ export default function StaffingServicesPage() {
     {
       category: "IT Staffing",
       description: "Access top-tier technology talent with specialized skills to drive your digital transformation and technical initiatives.",
-      image: "/staff5.avif",
+      image: "/staff.jpg",
       positions: [
         "Software Developers & Engineers",
         "Cloud & DevOps Engineers",
@@ -330,7 +330,7 @@ export default function StaffingServicesPage() {
             <div className="relative group">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/wearehiring.png"
+                  src="/wearehiring.jpg"
                   alt="Staffing Services Team"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"

@@ -26,7 +26,7 @@ export default function Navbar() {
     { name: "About Us", href: "/about-us" },
     { name: "Services", href: "/services", dropdown: servicesItems },
     { name: "Become a Partner", href: "/become-a-partner" },
-    { name: "Careers", href: "/careers" },
+    // { name: "Careers", href: "/careers" }, // Commented out as requested
     { name: "Blogs", href: "/blogs" },
   ];
 
@@ -58,83 +58,83 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-        {/* ===== Logo ===== */}
-<Link
-  href="/"
-  className="flex items-center gap-3 group select-none"
->
-  {/* Logo Image */}
-  <div
-    className="
-      relative
-      w-10 h-10 sm:w-12 sm:h-12
-      flex items-center justify-center
-      transition-transform duration-300 ease-out
-      group-hover:scale-[1.06]
-    "
-  >
-    <Image
-      src="/logo.jpeg"
-      alt="InfoGrowth Logo"
-      width={48}
-      height={48}
-      className="
-        object-contain
-        rounded-full
-        shadow-md
-        transition-shadow duration-300
-        group-hover:shadow-lg
-      "
-      priority
-    />
-  </div>
+          {/* ===== Logo ===== */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 group select-none"
+          >
+            {/* Logo Image */}
+            <div
+              className="
+                relative
+                w-10 h-10 sm:w-12 sm:h-12
+                flex items-center justify-center
+                transition-transform duration-300 ease-out
+                group-hover:scale-[1.06]
+              "
+            >
+              <Image
+                src="/logo4k.png"
+                alt="InfoGrowth Logo"
+                width={512}
+                height={512}
+                className="
+                  object-contain
+                  rounded-full
+                  shadow-md
+                  transition-shadow duration-300
+                  group-hover:shadow-lg
+                "
+                priority
+              />
+            </div>
 
-  {/* Brand Text */}
-  <div className="flex flex-col justify-center leading-tight">
-    <div className="flex items-center">
-      <span
-        className="
-          font-[Poppins]
-          text-[18px] sm:text-[20px] md:text-[22px]
-          font-extrabold
-          tracking-tight
-          text-[#96bb57]
-          transition-colors duration-300
-          group-hover:text-[#86a94c]
-        "
-      >
-        Info
-      </span>
+            {/* Brand Text */}
+            <div className="flex flex-col justify-center leading-tight">
+              <div className="flex items-center">
+                <span
+                  className="
+                    font-[Poppins]
+                    text-[18px] sm:text-[20px] md:text-[22px]
+                    font-extrabold
+                    tracking-tight
+                    text-[#96bb57]
+                    transition-colors duration-300
+                    group-hover:text-[#86a94c]
+                  "
+                >
+                  Info
+                </span>
 
-      <span
-        className="
-          font-[Poppins]
-          text-[18px] sm:text-[20px] md:text-[22px]
-          font-extrabold
-          tracking-tight
-          text-[#3f7ec1]
-          transition-colors duration-300
-          group-hover:text-[#356fb0]
-        "
-      >
-        Growth
-      </span>
-    </div>
+                <span
+                  className="
+                    font-[Poppins]
+                    text-[18px] sm:text-[20px] md:text-[22px]
+                    font-extrabold
+                    tracking-tight
+                    text-[#3f7ec1]
+                    transition-colors duration-300
+                    group-hover:text-[#356fb0]
+                  "
+                >
+                  Growth
+                </span>
+              </div>
 
-    {/* Tagline */}
-    <span
-      className="
-        text-[10px] sm:text-[11px]
-        tracking-wide
-        text-white
-        transition-opacity duration-300
-        group-hover:opacity-80
-      "
-    >
-      IT Services & Staffing
-    </span>
-  </div>
-</Link>
+              {/* Tagline */}
+              <span
+                className="
+                  text-[10px] sm:text-[11px]
+                  tracking-wide
+                  text-white
+                  transition-opacity duration-300
+                  group-hover:opacity-80
+                "
+              >
+                IT Services & Staffing
+              </span>
+            </div>
+          </Link>
 
           {/* ===== Desktop Menu ===== */}
           <div className="hidden lg:flex items-center gap-10">
@@ -142,7 +142,7 @@ export default function Navbar() {
               item.dropdown ? (
                 <div key={item.name} className="relative" ref={servicesRef}>
                   <div className="flex items-center gap-1">
-                    {/* Services LINK */}
+                    {/* Services LINK - Now clickable */}
                     <Link
                       href={item.href}
                       className="text-white/90 hover:text-white font-semibold text-[15px] relative group/link"
@@ -151,11 +151,11 @@ export default function Navbar() {
                       <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#96bb57] to-[#3f7ec1] transition-all duration-300 group-hover/link:w-full"></span>
                     </Link>
 
-                    {/* Dropdown Trigger */}
+                    {/* Dropdown Trigger - Only the arrow */}
                     <button
                       onClick={() => setServicesOpen((prev) => !prev)}
                       className="p-1 text-white/80 hover:text-white transition-colors"
-                      aria-label="Toggle services"
+                      aria-label="Toggle services dropdown"
                     >
                       <ChevronDown
                         className={`w-4 h-4 transition-transform duration-200 ${
@@ -165,7 +165,7 @@ export default function Navbar() {
                     </button>
                   </div>
 
-                  {/* Dropdown (ONLY ONCE) */}
+                  {/* Dropdown */}
                   <div 
                     className={`absolute left-1/2 -translate-x-1/2 top-full mt-3 w-72 transition-all duration-200 transform ${
                       servicesOpen 
@@ -236,41 +236,87 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* ===== Mobile Menu with Smooth Animation ===== */}
+        {/* ===== Mobile Menu with Solid Background ===== */}
         <div 
           className={`
             lg:hidden overflow-hidden transition-all duration-300 ease-in-out
-            ${mobileMenuOpen ? 'max-h-[800px] opacity-100 mt-6' : 'max-h-0 opacity-0'}
+            ${mobileMenuOpen ? 'max-h-[800px] opacity-100 mt-4' : 'max-h-0 opacity-0'}
           `}
         >
-          <div className="pb-6 border-t border-white/20 pt-6 space-y-4">
+          <div className="
+            bg-gradient-to-r from-[#05325A] via-[#0A4C8A] to-[#0F5FA8]
+            rounded-xl shadow-2xl
+            border border-white/10
+            p-4
+            space-y-2
+          ">
             {navItems.map((item) =>
               item.dropdown ? (
                 <div key={item.name}>
-                  <button
-                    className="flex justify-between w-full text-white font-semibold py-3 px-2 rounded-lg hover:bg-white/5 transition-colors"
-                    onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                  >
-                    {item.name}
-                    <ChevronDown
-                      className={`w-4 h-4 transition-transform duration-200 ${
-                        mobileServicesOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
+                  {/* Mobile Services Item - Split into Link and Button */}
+                  <div className="flex items-center justify-between w-full">
+                    {/* Clickable Services Link */}
+                    <Link
+                      href={item.href}
+                      className="
+                        flex-1
+                        text-white font-semibold 
+                        py-3.5 px-4 
+                        rounded-lg hover:bg-white/10 
+                        transition-colors
+                        text-left
+                      "
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        setMobileServicesOpen(false);
+                      }}
+                    >
+                      {item.name}
+                    </Link>
+                    
+                    {/* Dropdown Toggle Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setMobileServicesOpen(!mobileServicesOpen);
+                      }}
+                      className="
+                        p-2
+                        text-white/80 hover:text-white 
+                        transition-colors
+                        rounded-lg hover:bg-white/10
+                      "
+                      aria-label="Toggle services dropdown"
+                    >
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          mobileServicesOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
 
+                  {/* Services Dropdown Items */}
                   <div 
                     className={`
-                      ml-3 space-y-1 border-l border-white/20 pl-3 overflow-hidden transition-all duration-300
-                      ${mobileServicesOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}
+                      ml-3 space-y-1 overflow-hidden transition-all duration-300
+                      ${mobileServicesOpen ? 'max-h-[500px] opacity-100 mt-2' : 'max-h-0 opacity-0'}
                     `}
                   >
                     {servicesItems.map((service) => (
                       <Link
                         key={service.name}
                         href={service.href}
-                        className="block text-white/80 hover:text-white py-2.5 px-4 rounded-lg hover:bg-white/5 transition-all"
-                        onClick={() => setMobileMenuOpen(false)}
+                        className="
+                          block text-white/90 hover:text-white 
+                          py-3 px-6 
+                          rounded-lg hover:bg-white/10 
+                          transition-all
+                        "
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setMobileServicesOpen(false);
+                        }}
                       >
                         {service.name}
                       </Link>
@@ -281,7 +327,12 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block text-white font-semibold py-3 px-2 rounded-lg hover:bg-white/5 transition-colors"
+                  className="
+                    block text-white font-semibold 
+                    py-3.5 px-4 
+                    rounded-lg hover:bg-white/10 
+                    transition-colors
+                  "
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
@@ -289,13 +340,14 @@ export default function Navbar() {
               )
             )}
             
-            <div className="pt-6 border-t border-white/20">
+            {/* CTA Button */}
+            <div className="pt-4 mt-4 border-t border-white/20">
               <Link
                 href="/contact-us"
                 className="
                   block w-full text-center
                   bg-gradient-to-r from-[#96bb57] to-[#3f7ec1]
-                  text-white px-6 py-4 rounded-full
+                  text-white px-6 py-3.5 rounded-full
                   font-bold tracking-wide hover:shadow-xl
                   transition-all duration-300
                   shadow-lg

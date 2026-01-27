@@ -442,6 +442,45 @@ export default function FintechOrderToCashPage() {
         </div>
       </section>
 
+      {/* Industries We Serve - MOVED TO TOP */}
+      <section className="py-20 md:py-32 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center justify-center px-4 py-2 bg-[#96bb57]/10 text-[#96bb57] rounded-full text-sm font-semibold mb-6">
+              <Building className="w-4 h-4 mr-2" />
+              Industry Solutions
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Serving Diverse Industries
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              Customized FinTech O2C solutions tailored to specific industry requirements
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {industries.map((industry, index) => (
+              <div key={index} className="group bg-white rounded-2xl border border-gray-200 p-8 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-500">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#96bb57]/10 to-[#3f7ec1]/10 flex items-center justify-center text-[#3f7ec1]">
+                    {industry.icon}
+                  </div>
+                  <div className="text-2xl font-bold text-gray-900">{industry.clients}</div>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{industry.name}</h3>
+                <p className="text-gray-600 mb-6">{industry.description}</p>
+                <div className="pt-6 border-t border-gray-100">
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <CheckCircle className="w-4 h-4 text-[#96bb57]" />
+                    <span>Industry-specific workflows</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Metrics Section */}
       <section className="py-20 md:py-32 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -509,9 +548,7 @@ export default function FintechOrderToCashPage() {
                     </li>
                   ))}
                 </ul>
-                <button className="w-full rounded-xl border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 hover:border-[#3f7ec1] hover:text-[#3f7ec1] hover:bg-[#3f7ec1]/10 transition-all duration-300">
-                  Learn More
-                </button>
+               
               </div>
             ))}
           </div>
@@ -577,7 +614,7 @@ export default function FintechOrderToCashPage() {
             <div className="relative group">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/fintech3.avif"
+                  src="/fintech.jpg"
                   alt="FinTech Process Flow"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -651,47 +688,8 @@ export default function FintechOrderToCashPage() {
         </div>
       </section>
 
-      {/* Industries We Serve */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center justify-center px-4 py-2 bg-[#96bb57]/10 text-[#96bb57] rounded-full text-sm font-semibold mb-6">
-              <Building className="w-4 h-4 mr-2" />
-              Industry Solutions
-            </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Serving Diverse Industries
-            </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Customized FinTech O2C solutions tailored to specific industry requirements
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {industries.map((industry, index) => (
-              <div key={index} className="group bg-white rounded-2xl border border-gray-200 p-8 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-500">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#96bb57]/10 to-[#3f7ec1]/10 flex items-center justify-center text-[#3f7ec1]">
-                    {industry.icon}
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">{industry.clients}</div>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{industry.name}</h3>
-                <p className="text-gray-600 mb-6">{industry.description}</p>
-                <div className="pt-6 border-t border-gray-100">
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <CheckCircle className="w-4 h-4 text-[#96bb57]" />
-                    <span>Industry-specific workflows</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Features List */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-20 md:py-32 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="space-y-8">
@@ -751,7 +749,7 @@ export default function FintechOrderToCashPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-20 md:py-32 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <div className="inline-flex items-center justify-center px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold mb-6">

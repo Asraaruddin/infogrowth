@@ -81,7 +81,7 @@ export default function ManagedITServicesPage() {
     {
       category: "IT Infrastructure",
       description: "Comprehensive management of your entire IT ecosystem ensuring maximum uptime, performance, and scalability for business growth.",
-      image1: "/manageditsolutions.avif",
+      image1: "/managedit.jpg",
       image2: "/manageditsolutions2.avif",
       services: [
         { name: "Network Monitoring & Management", description: "24/7 proactive monitoring of your network infrastructure with predictive maintenance" },
@@ -94,7 +94,7 @@ export default function ManagedITServicesPage() {
     {
       category: "Cloud Solutions",
       description: "Seamless cloud migration and management services that enhance flexibility, collaboration, and operational efficiency.",
-      image1: "/manageditsolutions3.avif",
+      image1: "/managedit3.jpg",
       image2: "/manageditsolutions2.avif",
       services: [
         { name: "Cloud Migration Services", description: "Strategic planning and execution of cloud migration with zero data loss guarantee" },
@@ -103,19 +103,6 @@ export default function ManagedITServicesPage() {
         { name: "Cloud Security & Compliance", description: "Advanced security protocols and compliance management for cloud environments" },
       ],
       icon: <CloudCog className="w-6 h-6" />
-    },
-    {
-      category: "Cybersecurity",
-      description: "Proactive protection against evolving cyber threats with enterprise-grade security solutions and continuous monitoring.",
-      image1: "/manageditsolutions2.avif",
-      image2: "/manageditsolutions.avif",
-      services: [
-        { name: "Advanced Threat Protection", description: "Multi-layered security solutions including EDR, firewalls, and threat intelligence" },
-        { name: "Security Audits & Compliance", description: "Regular security assessments and compliance management (GDPR, HIPAA, PCI-DSS)" },
-        { name: "Data Encryption & Protection", description: "End-to-end encryption and data loss prevention strategies" },
-        { name: "Security Awareness Training", description: "Employee training programs to prevent social engineering and phishing attacks" },
-      ],
-      icon: <ShieldCheck className="w-6 h-6" />
     }
   ];
 
@@ -178,15 +165,6 @@ export default function ManagedITServicesPage() {
             support to keep your business running smoothly and securely.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="group bg-white text-[#05325A] px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 hover:shadow-2xl transition-all duration-300 inline-flex items-center justify-center gap-3">
-              Get Your Free IT Assessment
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button className="bg-transparent border-2 border-white/40 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/15 hover:border-white/60 transition-all duration-300">
-              View Case Studies
-            </button>
-          </div>
         </div>
       </section>
 
@@ -243,7 +221,7 @@ export default function ManagedITServicesPage() {
             <div className="relative group">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/manageditsolutions.avif"
+                  src="/managedit2.jpg"
                   alt="Managed IT Services Infrastructure"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -336,7 +314,7 @@ export default function ManagedITServicesPage() {
           </div>
 
           {/* Cloud Solutions */}
-          <div className="grid lg:grid-cols-2 gap-20 items-center mb-32">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
             {/* Content */}
             <div>
               <div className="flex items-center gap-4 mb-6">
@@ -381,55 +359,6 @@ export default function ManagedITServicesPage() {
                 fill
                 className="object-cover"
               />
-            </div>
-          </div>
-
-          {/* Cybersecurity */}
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            {/* Image */}
-            <div className="relative aspect-[16/10] rounded-3xl overflow-hidden shadow-xl">
-              <Image
-                src={serviceCategories[2].image1}
-                alt="Cybersecurity Services"
-                fill
-                className="object-cover"
-              />
-            </div>
-
-            {/* Content */}
-            <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center text-white">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <span className="text-sm font-semibold text-purple-700">
-                  Cybersecurity
-                </span>
-              </div>
-
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                Advanced Cybersecurity Protection
-              </h3>
-
-              <p className="text-gray-600 text-lg mb-10">
-                Proactive protection against evolving cyber threats with enterprise-grade security solutions and continuous monitoring.
-              </p>
-
-              <div className="space-y-6">
-                {serviceCategories[2].services.map((service, idx) => (
-                  <div key={idx} className="flex gap-4">
-                    <CheckCircle className="w-5 h-5 text-purple-600 mt-1" />
-                    <div>
-                      <h4 className="font-semibold text-gray-900">
-                        {service.name}
-                      </h4>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        {service.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>
@@ -718,11 +647,6 @@ export default function ManagedITServicesPage() {
                   </li>
                 ))}
               </ul>
-              
-              <button className="w-full bg-gradient-to-r from-[#96bb57] to-[#3f7ec1] text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3">
-                Get Your IT Assessment
-                <ArrowUpRight className="w-5 h-5" />
-              </button>
             </div>
           </div>
         </div>

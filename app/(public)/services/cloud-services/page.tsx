@@ -221,7 +221,7 @@ export default function CloudServicesPage() {
     { year: "2016", event: "Cloud Services Launch" },
     { year: "2017", event: "Elevated To AWS Advanced Consulting Partners" },
     { year: "2018", event: "Microsoft Workloads Competency" },
-    { year: "2019", event: "Amazon CloudFront SDP" },
+    { year: "2020", event: "Amazon CloudFront SDP" },
     { year: "2020", event: "AWS WAF SDP" },
     { year: "2021", event: "AWS Config SDP" },
     { year: "2022", event: "AWS RDS SDP" },
@@ -309,16 +309,7 @@ export default function CloudServicesPage() {
           <p className="text-xl md:text-2xl text-white/95 leading-relaxed max-w-4xl mx-auto mb-12">
             Empowering businesses with cutting-edge cloud technology solutions. We define your cloud journey and provide the right expertise to make your transition smooth and successful.
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="group bg-white text-[#05325A] px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 hover:shadow-2xl transition-all duration-300 inline-flex items-center justify-center gap-3">
-              Get Free Cloud Assessment
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button className="bg-transparent border-2 border-white/40 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/15 hover:border-white/60 transition-all duration-300">
-              View Case Studies
-            </button>
-          </div>
+        
         </div>
       </section>
 
@@ -374,7 +365,7 @@ export default function CloudServicesPage() {
             <div className="relative group">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/cloud2.avif"
+                  src="/cloud.jpg"
                   alt="Cloud Infrastructure"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -512,11 +503,6 @@ export default function CloudServicesPage() {
                   </div>
                 ))}
               </div>
-
-              <button className="mt-10 w-full md:w-auto bg-gradient-to-r from-[#96bb57] to-[#3f7ec1] text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3">
-                Explore {activeProvider === "aws" ? "AWS" : "Azure"} Solutions
-                <ArrowUpRight className="w-5 h-5" />
-              </button>
             </div>
           </div>
         </div>
@@ -667,11 +653,6 @@ export default function CloudServicesPage() {
                   ))}
                 </div>
               </div>
-              
-              <button className="w-full bg-gradient-to-r from-[#96bb57] to-[#3f7ec1] text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3">
-                Get Your Cloud Strategy
-                <ArrowUpRight className="w-5 h-5" />
-              </button>
             </div>
           </div>
         </div>
@@ -791,91 +772,6 @@ export default function CloudServicesPage() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-20 md:py-32 bg-gradient-to-r from-[#96bb57] via-[#3f7ec1] to-[#0A4C8A] text-white">
-        <div className="absolute inset-0 bg-grid-white/[0.05]"></div>
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center justify-center px-5 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-8">
-            <Cloud className="w-4 h-4 mr-2" />
-            Ready for Cloud Transformation?
-          </div>
-          
-          <h2 className="text-3xl md:text-5xl font-bold mb-8">
-            Trust Us for the Most Efficient Cloud Services
-          </h2>
-          
-          <p className="text-xl text-white/95 max-w-2xl mx-auto mb-12 leading-relaxed">
-            Share your contact details and our cloud experts will get in touch within 24 hours.
-          </p>
-          
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl mx-auto">
-            <form className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">Full Name *</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#3f7ec1] focus:ring-2 focus:ring-[#3f7ec1]/20 outline-none transition-all"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">Organization</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#3f7ec1] focus:ring-2 focus:ring-[#3f7ec1]/20 outline-none transition-all"
-                    placeholder="Your Company"
-                  />
-                </div>
-              </div>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">Email ID *</label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#3f7ec1] focus:ring-2 focus:ring-[#3f7ec1]/20 outline-none transition-all"
-                    placeholder="john@company.com"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">Contact Number *</label>
-                  <input
-                    type="tel"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#3f7ec1] focus:ring-2 focus:ring-[#3f7ec1]/20 outline-none transition-all"
-                    placeholder="+1 (555) 123-4567"
-                  />
-                </div>
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-[#96bb57] to-[#3f7ec1] text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-              >
-                Submit Request
-              </button>
-            </form>
-          </div>
-          
-          <div className="mt-16 pt-16 border-t border-white/20">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-white/90">
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5" />
-                <span>cloud@infogrowth.com</span>
-              </div>
-              <div className="hidden md:block w-px h-6 bg-white/30"></div>
-              <div className="flex items-center gap-3">
-                <HeadphonesIcon className="w-5 h-5" />
-                <span>24/7 Cloud Support</span>
-              </div>
-              <div className="hidden md:block w-px h-6 bg-white/30"></div>
-              <div className="flex items-center gap-3">
-                <Clock className="w-5 h-5" />
-                <span>Response within 24 hours</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>

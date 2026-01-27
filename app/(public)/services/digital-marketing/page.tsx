@@ -82,8 +82,7 @@ export default function DigitalMarketingPage() {
     {
       category: "Google Analytics",
       description: "Gain actionable insights to drive data-driven marketing decisions with comprehensive analytics and reporting.",
-      image1: "/analytics.avif",
-      image2: "/analytics2.avif",
+      image1: "/newpic.jpg",
       services: [
         { name: "Performance Tracking", description: "Monitor campaign effectiveness in real-time with custom dashboards and reports" },
         { name: "Conversion Analytics", description: "Understand customer journey and optimize touchpoints for maximum conversions" },
@@ -95,7 +94,7 @@ export default function DigitalMarketingPage() {
     {
       category: "SEO Services",
       description: "Improve organic visibility and drive sustainable traffic growth with our comprehensive SEO strategies.",
-      image1: "/seo.png",
+      image1: "/seo.jpg",
       services: [
         { name: "Technical SEO", description: "Optimize website structure, speed, and mobile-friendliness for better search rankings" },
         { name: "On-Page Optimization", description: "Enhance content and metadata for better rankings and click-through rates" },

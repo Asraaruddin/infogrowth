@@ -14,7 +14,7 @@ export default function Footer() {
         {/* Single Row Footer */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6">
           
-          {/* Left Section: Logo + Since 2019 */}
+          {/* Left Section: Logo + Since 2020 */}
           <div className="flex items-center gap-3">
             <Image
               src="/logo.jpeg"
@@ -28,7 +28,7 @@ export default function Footer() {
                 <span className="font-bold text-[#96bb57]">Info</span>
                 <span className="font-bold  text-[#3f7ec1]">Growth</span>
               </div>
-              <span className="text-white/70 text-xs">Since 2019</span>
+              <span className="text-white/70 text-xs">Since 2020</span>
             </div>
           </div>
 
