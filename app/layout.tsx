@@ -20,7 +20,9 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap"
           rel="stylesheet"
         />
-        {/* Google Tag Manager Script */}
+        
+        {/* ========== GOOGLE TAGS ========== */}
+        {/* Google Tag Manager */}
         <Script
           id="gtm-script"
           strategy="afterInteractive"
@@ -31,6 +33,25 @@ export default function RootLayout({
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer','GTM-PS8LVBPX');
+            `,
+          }}
+        />
+
+        {/* Google Analytics 4 (GA4) */}
+        <Script
+          id="ga4-external"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-ECXP8N4EWZ"
+        />
+        <Script
+          id="ga4-inline"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-ECXP8N4EWZ');
             `,
           }}
         />
