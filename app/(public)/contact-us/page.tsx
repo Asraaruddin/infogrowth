@@ -10,6 +10,9 @@ const ContactPage = () => {
 
       {/* ===== Hero Section ===== */}
       <section className="bg-gradient-to-r from-[#0B3C6D] to-[#1E6BB8] py-20 text-center text-white">
+
+        instead of this  bg  add this  bg  pic  ok  
+        C:\Users\Asrar uddin\Infogrowth\landing-page\public\contact.avif and on it text should be  whitish because the  bg is  darkblueok and  make the content  some what down  so  it could  be vsible  correctly because nav  bar is  transparent  and the   content is  going  up  i dont want  that ensure the  uiux  and responsiveness and pixelperfect ok   alos  in the  address add this  when user  clicks on this 
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Contact Us
         </h1>
