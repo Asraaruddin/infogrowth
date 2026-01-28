@@ -244,7 +244,9 @@ export default function ContactForm({
                   <option value="Staffing Solutions">Staffing Solutions</option>
                   <option value="Cloud Services">Cloud Services</option>
                   <option value="Digital Marketing">Digital Marketing</option>
+                  <option value="fintech-order-to-cash">fintech-order-to-cash</option>
                   <option value="General Inquiry">General Inquiry</option>
+                  <option value="Others">Others</option>
                 </select>
               </div>
             </div>

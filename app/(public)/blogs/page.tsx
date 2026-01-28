@@ -678,34 +678,6 @@ export default function BlogsPage() {
                     ))}
                   </div>
                 </div>
-
-                {/* Newsletter Signup */}
-                <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl shadow-lg p-6 border border-purple-100">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Stay Updated</h3>
-                  <p className="text-gray-600 mb-4">
-                    Get real-time notifications when new blog posts are published or updated.
-                  </p>
-                  <form 
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      alert('Thank you for subscribing! You will receive real-time updates.');
-                    }}
-                    className="space-y-3"
-                  >
-                    <input
-                      type="email"
-                      placeholder="Your email address"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                      required
-                    />
-                    <button
-                      type="submit"
-                      className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                    >
-                      Subscribe to Updates
-                    </button>
-                  </form>
-                </div>
               </div>
             </div>
           </div>

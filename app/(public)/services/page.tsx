@@ -73,7 +73,7 @@ export default function ServicesPage() {
             fill
             className="object-cover"
             priority
-            quality={100}
+            quality={75}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
@@ -378,8 +378,8 @@ export default function ServicesPage() {
   );
 }
 
-// Service Card Component for Grid View
-const ServiceCard = ({ icon, title, description, gradient, index }: any) => (
+// Service Card Component for Grid View - UPDATED with correct href
+const ServiceCard = ({ icon, title, description, gradient, index, slug }: any) => (
   <article 
     className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group overflow-hidden"
     style={{ animationDelay: `${index * 100}ms` }}
@@ -398,7 +398,7 @@ const ServiceCard = ({ icon, title, description, gradient, index }: any) => (
     </p>
     <div className="flex items-center justify-between">
       <Link
-        href={`/services/${title.toLowerCase().replace(/\s+/g, '-')}`}
+        href={slug} // Use the provided slug instead of generating from title
         className="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm hover:text-blue-700 group/arrow"
         aria-label={`Learn more about ${title} services`}
       >
@@ -438,6 +438,7 @@ const DetailedServiceSection = ({
               className="object-cover group-hover:scale-105 transition-transform duration-700"
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority={false}
+              quality={75}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
             <div className={`absolute inset-0 bg-gradient-to-r ${gradient.split(' ')[2]} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
@@ -515,71 +516,77 @@ const DetailedServiceSection = ({
   </section>
 );
 
-// Data Arrays with SEO Keywords
+// Data Arrays with CORRECTED slugs
 const servicesData = [
   {
     icon: <Code2 className="w-6 h-6 sm:w-7 sm:h-7" />,
-    title: "Web & Mobile Development",
-    description: "Scalable, secure applications using modern technologies and best practices for custom web development and mobile app development.",
+    title: "Digital Marketing",
+    description: "Data-driven strategies to increase visibility, engagement, and conversions with professional digital marketing services.",
     gradient: "from-blue-500 to-cyan-500",
+    slug: "/services/digital-marketing",
   },
   {
     icon: <Cloud className="w-6 h-6 sm:w-7 sm:h-7" />,
-    title: "Cloud Solutions",
+    title: "Cloud Services",
     description: "Enhance agility, scalability, and performance while reducing costs with comprehensive cloud migration and cloud infrastructure services.",
     gradient: "from-purple-500 to-pink-500",
+    slug: "/services/cloud-services",
   },
   {
     icon: <Database className="w-6 h-6 sm:w-7 sm:h-7" />,
-    title: "SAP Consulting",
+    title: "SAP Services",
     description: "End-to-end SAP implementation and optimization for enterprise processes with expert SAP consulting services.",
     gradient: "from-green-500 to-emerald-500",
+    slug: "/services/sap-services",
   },
   {
     icon: <CreditCard className="w-6 h-6 sm:w-7 sm:h-7" />,
-    title: "FinTech Solutions",
+    title: "FinTech - Order to Cash",
     description: "Order-to-Cash automation and financial operations streamlining with advanced fintech solutions and payment processing.",
     gradient: "from-orange-500 to-red-500",
+    slug: "/services/fintech-order-to-cash",
   },
   {
     icon: <BarChart3 className="w-6 h-6 sm:w-7 sm:h-7" />,
-    title: "Digital Marketing",
-    description: "Data-driven strategies to increase visibility, engagement, and conversions with professional digital marketing services.",
+    title: "Staffing Services",
+    description: "End-to-end staffing solutions delivering skilled talent for contract, permanent, and project-based roles with IT staffing services.",
     gradient: "from-indigo-500 to-blue-500",
+    slug: "/services/staffing-services",
   },
   {
     icon: <Shield className="w-6 h-6 sm:w-7 sm:h-7" />,
-    title: "Staffing Services",
-    description: "End-to-end staffing solutions delivering skilled talent for contract, permanent, and project-based roles with IT staffing services.",
+    title: "Managed IT Services",
+    description: "Comprehensive IT management and support services to ensure your technology infrastructure runs smoothly and efficiently.",
     gradient: "from-red-500 to-orange-500",
+    slug: "/services/managed-it-services",
   },
 ];
 
 const detailedServices = [
   {
-    title: "Web & Mobile App Development",
-    description: "We design and build scalable, secure, and high-performance web and mobile applications using modern technologies and industry best practices. Our custom software development solutions drive user engagement and business growth.",
+    title: "Digital Marketing",
+    description: "We design and implement data-driven digital marketing strategies that increase visibility, engagement, and conversions. Our comprehensive services drive measurable business growth through targeted campaigns.",
     points: [
-      "Custom web & mobile application development",
-      "UI/UX focused product design with prototyping",
-      "Enterprise-grade scalability & security architecture",
-      "API development & third-party integrations",
-      "Progressive Web Apps (PWA) & responsive design",
-      "Performance optimization & analytics integration",
+      "Search Engine Optimization (SEO)",
+      "Pay-Per-Click (PPC) Advertising",
+      "Social Media Marketing",
+      "Content Marketing Strategy",
+      "Email Marketing Automation",
+      "Analytics & Performance Tracking",
     ],
     image: "/webdev.jpg",
-    icon: <Code2 className="w-6 h-6 sm:w-7 sm:h-7" />,
+    icon: <BarChart3 className="w-6 h-6 sm:w-7 sm:h-7" />,
     gradient: "from-blue-500 to-cyan-500",
     stats: [
-      { value: "300+", label: "Apps Delivered" },
+      { value: "300+", label: "Campaigns" },
       { value: "4.9/5", label: "Client Rating" },
-      { value: "40%", label: "Faster Time-to-Market" },
+      { value: "40%", label: "ROI Increase" },
     ],
-    href: "/services/managed-it-services"
+    href: "/services/digital-marketing"
   },
   {
-    title: "Cloud Solutions & Infrastructure",
-    description: "Leverage the power of cloud computing to enhance agility, scalability, and performance while reducing infrastructure costs. Our certified cloud architects ensure optimal cloud strategy implementation and migration services.",
+    title: "Cloud Services",
+    description: "Leverage the power of cloud computing to enhance agility, scalability, and performance while reducing infrastructure costs. Our certified cloud architects ensure optimal cloud strategy implementation.",
     points: [
       "Cloud migration, modernization & optimization",
       "AWS, Azure & Google Cloud certified solutions",
@@ -599,8 +606,8 @@ const detailedServices = [
     href: "/services/cloud-services"
   },
   {
-    title: "SAP Implementation & Consulting",
-    description: "Transform your business operations with comprehensive SAP solutions. We deliver end-to-end SAP implementation, customization, and support services to optimize your enterprise processes and digital transformation.",
+    title: "SAP Services",
+    description: "Transform your business operations with comprehensive SAP solutions. We deliver end-to-end SAP implementation, customization, and support services to optimize your enterprise processes.",
     points: [
       "SAP S/4HANA implementation & migration",
       "Custom SAP development & ABAP programming",
@@ -620,8 +627,8 @@ const detailedServices = [
     href: "/services/sap-services"
   },
   {
-    title: "FinTech Solutions - Order to Cash",
-    description: "Streamline your financial operations with our comprehensive Order-to-Cash solutions. Automate processes from order management to payment collection for improved cash flow management and financial technology integration.",
+    title: "FinTech - Order to Cash",
+    description: "Streamline your financial operations with our comprehensive Order-to-Cash solutions. Automate processes from order management to payment collection for improved cash flow management.",
     points: [
       "Order management & processing automation",
       "Automated invoicing & billing solutions",
