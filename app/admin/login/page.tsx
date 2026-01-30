@@ -1,32 +1,25 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, Loader2, AlertCircle } from 'lucide-react';
 import { supabase } from '@/app/lib/supabase';
 import { useAuth } from '../../components/AuthContext';
 
 export default function AdminLogin() {
-  const router = useRouter();
   const { user, loading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
   const [error, setError] = useState('');
-  const [mounted, setMounted] = useState(false);
 
+  // Redirect if already logged in - using window.location for reliability
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Redirect if already logged in - but only do this ONCE
-  useEffect(() => {
-    if (mounted && !loading && user) {
-      console.log('✅ User already logged in, redirecting to dashboard');
-      router.push('/admin');
+    if (!loading && user) {
+      console.log('✅ User already logged in, redirecting...');
+      window.location.href = '/admin';
     }
-  }, [mounted, loading, user, router]);
+  }, [loading, user]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,21 +39,22 @@ export default function AdminLogin() {
         throw signInError;
       }
       
-      console.log('✅ Login successful');
+      console.log('✅ Login successful, redirecting...');
       
-      // Redirect to dashboard
-      router.push('/admin');
+      // Use window.location for reliable redirect in production
+      setTimeout(() => {
+        window.location.href = '/admin';
+      }, 500);
       
     } catch (error: any) {
       console.error('❌ Login failed:', error);
       setError(error.message || 'Invalid email or password. Please try again.');
-    } finally {
       setLoginLoading(false);
     }
   };
 
-  // Show loading while checking auth or mounting
-  if (!mounted || (loading && !user)) {
+  // Show loading while checking auth
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
@@ -71,7 +65,7 @@ export default function AdminLogin() {
     );
   }
 
-  // If user is logged in, show redirecting message
+  // If user exists, show redirecting state
   if (user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -157,6 +151,7 @@ export default function AdminLogin() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 disabled={loginLoading}
+                tabIndex={-1}
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { supabase } from '@/app/lib/supabase';
 import { User, Session } from '@supabase/supabase-js';
 
@@ -26,54 +25,57 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    // Get initial session
-    const getSession = async () => {
-      try {
-        setLoading(true);
-        
-        // Check if Supabase is configured
-        if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-          console.error('❌ Supabase environment variables are missing!');
-          console.error('NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL ? '✓ Set' : '✗ Missing');
-          console.error('NEXT_PUBLIC_SUPABASE_ANON_KEY:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? '✓ Set' : '✗ Missing');
-          setLoading(false);
-          return;
-        }
+    let mounted = true;
 
+    // Get initial session
+    const initializeAuth = async () => {
+      try {
+        console.log('🔐 Initializing auth...');
+        
         const { data: { session }, error } = await supabase.auth.getSession();
         
+        if (!mounted) return;
+
         if (error) {
-          console.error('Error getting session:', error);
+          console.error('❌ Error getting session:', error);
           setSession(null);
           setUser(null);
         } else {
           setSession(session);
           setUser(session?.user ?? null);
-          console.log('✅ Session loaded:', session ? 'User logged in' : 'No user');
+          console.log('✅ Auth initialized:', session ? 'User logged in' : 'No user');
         }
       } catch (error) {
-        console.error('Error in getSession:', error);
-        setSession(null);
-        setUser(null);
+        console.error('❌ Auth initialization failed:', error);
+        if (mounted) {
+          setSession(null);
+          setUser(null);
+        }
       } finally {
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+          setInitialized(true);
+        }
       }
     };
 
-    getSession();
+    initializeAuth();
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
+        if (!mounted) return;
+
         console.log('🔐 Auth state changed:', event);
+        
         setSession(session);
         setUser(session?.user ?? null);
-        
+
         if (event === 'SIGNED_IN') {
-          console.log('✅ User signed in');
+          console.log('✅ User signed in successfully');
         } else if (event === 'SIGNED_OUT') {
           console.log('🚪 User signed out');
         }
@@ -81,23 +83,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
 
     return () => {
+      mounted = false;
       subscription.unsubscribe();
     };
   }, []);
 
   const signOut = async () => {
     try {
+      console.log('🚪 Signing out...');
       await supabase.auth.signOut();
-      router.push('/admin/login');
+      
+      // Force clear state
+      setUser(null);
+      setSession(null);
+      
+      // Redirect to login
+      window.location.href = '/admin/login';
     } catch (error) {
-      console.error('Sign out error:', error);
+      console.error('❌ Sign out error:', error);
     }
   };
 
   const value = {
     user,
     session,
-    loading,
+    loading: loading || !initialized,
     signOut,
   };
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { 
   LayoutDashboard, 
@@ -55,32 +55,49 @@ const menuLinks = [
 
 export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router = useRouter();
   const { user, loading, signOut } = useAuth();
   
-  // ALL HOOKS MUST BE CALLED BEFORE ANY CONDITIONAL RETURNS
+  // ALL HOOKS FIRST - React Rules of Hooks
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [hasRedirected, setHasRedirected] = useState(false);
 
   const isLoginPage = pathname === '/admin/login';
 
-  // Handle auth redirect
+  // Auth check - redirect to login if not authenticated
   useEffect(() => {
-    if (loading || isRedirecting || isLoginPage) return;
+    // Skip if on login page or already redirected or still loading
+    if (isLoginPage || hasRedirected || loading) return;
 
+    // If no user after loading, redirect to login
     if (!user) {
-      console.log('🔄 No user, redirecting to login');
-      setIsRedirecting(true);
-      router.push('/admin/login');
+      console.log('🔒 Not authenticated, redirecting to login');
+      setHasRedirected(true);
+      window.location.href = '/admin/login';
     }
-  }, [user, loading, pathname, router, isRedirecting, isLoginPage]);
+  }, [user, loading, isLoginPage, hasRedirected]);
 
-  // NOW we can do conditional rendering AFTER all hooks are called
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (profileOpen) {
+        const target = e.target as HTMLElement;
+        if (!target.closest('[data-profile-dropdown]')) {
+          setProfileOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [profileOpen]);
+
+  // Render login page without layout
   if (isLoginPage) {
     return <>{children}</>;
   }
 
+  // Show loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -92,17 +109,19 @@ export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) 
     );
   }
 
+  // If no user, show loading while redirecting
   if (!user) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto" />
-          <p className="mt-2 text-sm text-gray-600">Redirecting to login...</p>
+          <p className="mt-2 text-sm text-gray-600">Checking authentication...</p>
         </div>
       </div>
     );
   }
 
+  // Helper functions
   const getBreadcrumbItems = () => {
     const items = [];
     
@@ -284,7 +303,7 @@ export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) 
               </button>
 
               {/* User Profile */}
-              <div className="relative">
+              <div className="relative" data-profile-dropdown>
                 <button
                   onClick={() => setProfileOpen(!profileOpen)}
                   className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-lg transition-colors"
