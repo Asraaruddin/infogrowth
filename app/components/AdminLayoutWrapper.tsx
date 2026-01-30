@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { 
   LayoutDashboard, 
@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 import { useAuth } from './AuthContext';
 
-// Menu links data
 const menuLinks = [
   { 
     name: 'Dashboard', 
@@ -56,11 +55,54 @@ const menuLinks = [
 
 export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { user, loading, signOut } = useAuth();
+  
+  // ALL HOOKS MUST BE CALLED BEFORE ANY CONDITIONAL RETURNS
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
-  // Get breadcrumb items
+  const isLoginPage = pathname === '/admin/login';
+
+  // Handle auth redirect
+  useEffect(() => {
+    if (loading || isRedirecting || isLoginPage) return;
+
+    if (!user) {
+      console.log('🔄 No user, redirecting to login');
+      setIsRedirecting(true);
+      router.push('/admin/login');
+    }
+  }, [user, loading, pathname, router, isRedirecting, isLoginPage]);
+
+  // NOW we can do conditional rendering AFTER all hooks are called
+  if (isLoginPage) {
+    return <>{children}</>;
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto" />
+          <p className="mt-2 text-sm text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto" />
+          <p className="mt-2 text-sm text-gray-600">Redirecting to login...</p>
+        </div>
+      </div>
+    );
+  }
+
   const getBreadcrumbItems = () => {
     const items = [];
     
@@ -85,7 +127,6 @@ export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) 
     return items;
   };
 
-  // Get current page title
   const getCurrentPageTitle = () => {
     if (pathname === '/admin') return '';
     
@@ -95,23 +136,6 @@ export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) 
     
     return currentPage ? currentPage.breadcrumb || currentPage.name : '';
   };
-
-  // Don't render layout for login page
-  if (pathname === '/admin/login') {
-    return <>{children}</>;
-  }
-
-  // Show loading while checking auth
-  if (loading || !user) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto" />
-          <p className="mt-2 text-sm text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   const breadcrumbItems = getBreadcrumbItems();
   const currentPageTitle = getCurrentPageTitle();
@@ -304,12 +328,6 @@ export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) 
         <main className="flex-1 overflow-y-auto bg-gray-50">
           <div className="p-6">
             <div className="w-full">
-              {pathname === '/admin' && (
-                <div className="mb-6">
-                  <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
-                  <p className="text-gray-600 mt-1">Welcome back! Here's what's happening with your platform.</p>
-                </div>
-              )}
               {children}
             </div>
           </div>

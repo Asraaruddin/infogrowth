@@ -18,20 +18,15 @@ export default function AdminLogin() {
 
   useEffect(() => {
     setMounted(true);
-    
-    // Debug: Check environment variables
-    console.log('🔍 Environment Check:');
-    console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL ? '✓ Set' : '✗ Missing');
-    console.log('Supabase Key:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? '✓ Set' : '✗ Missing');
   }, []);
 
-  // Redirect if already logged in
+  // Redirect if already logged in - but only do this ONCE
   useEffect(() => {
-    if (user && !loading && mounted) {
+    if (mounted && !loading && user) {
       console.log('✅ User already logged in, redirecting to dashboard');
       router.push('/admin');
     }
-  }, [user, loading, router, mounted]);
+  }, [mounted, loading, user, router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,11 +35,6 @@ export default function AdminLogin() {
 
     try {
       console.log('🔐 Attempting login...');
-      
-      // Check if Supabase is configured
-      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-        throw new Error('Supabase is not configured. Please check your environment variables.');
-      }
 
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
@@ -56,12 +46,10 @@ export default function AdminLogin() {
         throw signInError;
       }
       
-      console.log('✅ Login successful:', data);
+      console.log('✅ Login successful');
       
-      // Auth context will handle the redirect
-      setTimeout(() => {
-        router.push('/admin');
-      }, 100);
+      // Redirect to dashboard
+      router.push('/admin');
       
     } catch (error: any) {
       console.error('❌ Login failed:', error);
@@ -71,8 +59,8 @@ export default function AdminLogin() {
     }
   };
 
-  // Show loading while checking auth
-  if (!mounted || loading) {
+  // Show loading while checking auth or mounting
+  if (!mounted || (loading && !user)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
@@ -83,7 +71,7 @@ export default function AdminLogin() {
     );
   }
 
-  // Don't show login form if user is already logged in
+  // If user is logged in, show redirecting message
   if (user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -115,20 +103,6 @@ export default function AdminLogin() {
           Sign into Admin Dashboard
         </h1>
 
-        {/* Environment Warning (only in development) */}
-        {process.env.NODE_ENV === 'development' && 
-         (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) && (
-          <div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 px-4 py-3 text-sm text-yellow-800">
-            <div className="flex items-start gap-2">
-              <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="font-semibold">Configuration Issue</p>
-                <p className="mt-1">Supabase environment variables are not set. Please check your .env file.</p>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Error */}
         {error && (
           <div className="mb-4 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-600">
@@ -154,6 +128,7 @@ export default function AdminLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@infogrowth.com"
+                autoComplete="email"
                 className="w-full rounded-lg border border-gray-300 py-3 pl-11 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 disabled={loginLoading}
               />
@@ -173,6 +148,7 @@ export default function AdminLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
+                autoComplete="current-password"
                 className="w-full rounded-lg border border-gray-300 py-3 pl-11 pr-11 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 disabled={loginLoading}
               />

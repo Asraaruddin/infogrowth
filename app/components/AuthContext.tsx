@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/app/lib/supabase';
 import { User, Session } from '@supabase/supabase-js';
 
@@ -26,9 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [redirecting, setRedirecting] = useState(false);
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     // Get initial session
@@ -87,40 +85,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  // Handle redirects based on auth state
-  useEffect(() => {
-    // Don't redirect while loading or already redirecting
-    if (loading || redirecting) return;
-
-    const isLoginPage = pathname === '/admin/login';
-    
-    // Redirect logic with timeout to prevent infinite loops
-    const handleRedirect = async () => {
-      if (!user && !isLoginPage) {
-        console.log('🔄 Redirecting to login (no user)');
-        setRedirecting(true);
-        await router.push('/admin/login');
-        setTimeout(() => setRedirecting(false), 500);
-      } else if (user && isLoginPage) {
-        console.log('🔄 Redirecting to dashboard (user logged in)');
-        setRedirecting(true);
-        await router.push('/admin');
-        setTimeout(() => setRedirecting(false), 500);
-      }
-    };
-
-    handleRedirect();
-  }, [user, loading, pathname, router, redirecting]);
-
   const signOut = async () => {
     try {
-      setRedirecting(true);
       await supabase.auth.signOut();
       router.push('/admin/login');
-      setTimeout(() => setRedirecting(false), 500);
     } catch (error) {
       console.error('Sign out error:', error);
-      setRedirecting(false);
     }
   };
 
