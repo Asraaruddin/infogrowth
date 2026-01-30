@@ -2,15 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeOff, Mail, Lock, Loader2, Briefcase, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, Loader2, Briefcase, AlertCircle, Info } from 'lucide-react';
 import { supabase } from '@/app/lib/supabase';
 import { useRecruiterAuth } from '../../../components/RecruiterAuthContext';
 
 export default function RecruiterLogin() {
   const router = useRouter();
   const { user, loading: authLoading } = useRecruiterAuth();
-  const [email, setEmail] = useState('recruiter@infogrowth.com');
-  const [password, setPassword] = useState('recruiter123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
   const [error, setError] = useState('');
@@ -101,7 +101,7 @@ export default function RecruiterLogin() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="recruiter@company.com"
+                  placeholder="Enter your email"
                   className="w-full pl-12 pr-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                   autoComplete="email"
@@ -120,7 +120,7 @@ export default function RecruiterLogin() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
+                  placeholder="Enter your password"
                   className="w-full pl-12 pr-12 py-3 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                   autoComplete="current-password"
@@ -156,16 +156,19 @@ export default function RecruiterLogin() {
             </button>
           </form>
 
-          {/* Demo Credentials */}
+          {/* Information Section - Removed demo credentials */}
           <div className="mt-8 pt-6 border-t border-gray-700/50">
             <div className="space-y-4">
-              <div>
-                <p className="text-sm text-gray-400 mb-3">
-                  <strong>Demo credentials:</strong>
-                </p>
-                <div className="text-sm text-gray-400 space-y-1 bg-gray-900/50 p-3 rounded-lg">
-                  <div>Email: <code className="px-2 py-1 rounded bg-gray-800">recruiter@infogrowth.com</code></div>
-                  <div>Password: <code className="px-2 py-1 rounded bg-gray-800">recruiter123</code></div>
+              <div className="bg-blue-900/30 border border-blue-700/50 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <Info className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="text-sm font-medium text-white mb-1">Access Information</h4>
+                    <p className="text-sm text-blue-300">
+                      Please contact your administrator for login credentials. 
+                      If you've forgotten your password, use the password reset option.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
