@@ -112,7 +112,7 @@ export default function ResumeUploader({ onFileUploaded }: ResumeUploaderProps) 
             or click to browse
           </p>
           <div className="text-xs text-gray-400">
-            Supported formats: PDF, DOC, DOCX, TXT • Max size: 10MB
+            Supported formats: PDF, DOC, DOCX, TXT • Max size:2MB
           </div>
         </div>
       ) : (

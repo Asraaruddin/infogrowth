@@ -390,38 +390,6 @@ export default function BlogsPage() {
               Stay ahead with our live-updating blogs featuring real-time data, interactive examples, 
               and instant feedback from industry experts. Experience content that evolves as you read.
             </p>
-
-            {/* Live Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Eye className="w-4 h-4" />
-                  <span className="text-xs uppercase tracking-wide">Live Readers</span>
-                </div>
-                <div className="text-2xl font-bold">{liveMetrics.currentReaders}</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Users className="w-4 h-4" />
-                  <span className="text-xs uppercase tracking-wide">Active Sessions</span>
-                </div>
-                <div className="text-2xl font-bold">{liveMetrics.activeSessions}</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Globe className="w-4 h-4" />
-                  <span className="text-xs uppercase tracking-wide">Total Views</span>
-                </div>
-                <div className="text-2xl font-bold">{(liveMetrics.totalViews / 1000).toFixed(1)}K</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <TrendingUp className="w-4 h-4" />
-                  <span className="text-xs uppercase tracking-wide">Trending</span>
-                </div>
-                <div className="text-2xl font-bold">{liveMetrics.trendingPosts}</div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

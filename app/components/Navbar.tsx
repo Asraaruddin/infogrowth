@@ -26,7 +26,7 @@ export default function Navbar() {
     { name: "About Us", href: "/about-us" },
     { name: "Services", href: "/services", dropdown: servicesItems },
     { name: "Become a Partner", href: "/become-a-partner" },
-    // { name: "Careers", href: "/careers" }, // Commented out as requested
+    { name: "Careers", href: "/careers" }, 
     { name: "Blogs", href: "/blogs" },
   ];
 
@@ -120,6 +120,8 @@ export default function Navbar() {
                   Growth
                 </span>
               </div>
+
+              
 
               {/* Tagline */}
               <span

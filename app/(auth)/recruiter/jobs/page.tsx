@@ -202,18 +202,6 @@ export default function JobPostingsPage() {
             </div>
           </div>
         </div>
-
-        <div className="bg-white rounded-xl p-5 border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Avg. per Job</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{stats.avgApplicants}</p>
-            </div>
-            <div className="p-3 bg-orange-50 rounded-lg">
-              <TrendingUp className="w-5 h-5 text-orange-600" />
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Filters */}
